@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 3: Intro to Solid Objects</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --secondary: #f39c12;
+            --success: #2ecc71;
+            --bg: #f4f7f6;
+            --text: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 900px;
+            width: 95%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background: #eee;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Learning Cards */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .card h3 { color: var(--primary); }
+
+        .shape-box {
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        /* Sorting Game */
+        .game-area {
+            text-align: center;
+        }
+
+        .draggable-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            min-height: 80px;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+        }
+
+        .item {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            cursor: grab;
+            user-select: none;
+            font-weight: bold;
+        }
+
+        .drop-zones {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .zone {
+            min-height: 150px;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .zone h4 { margin-top: 0; }
+        #plane-zone { border-color: var(--secondary); background: #fffdf9; }
+        #solid-zone { border-color: var(--success); background: #f9fffb; }
+
+        .btn {
+            padding: 10px 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            height: 24px;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Class 4 Maths: Plane vs Solid</h1>
+    <p>Day 3: Introduction to 3D Shapes</p>
+</header>
+
+<div class="container">
+    <div class="tab-container">
+        <button class="tab active" onclick="showTab('learn')">1. Learn the Basics</button>
+        <button class="tab" onclick="showTab('game')">2. Sorting Challenge</button>
+        <button class="tab" onclick="showTab('quiz')">3. Quick Check</button>
+    </div>
+
+    <!-- Tab 1: Learning -->
+    <section id="learn" class="content-section active">
+        <h2>What is the difference?</h2>
+        <p>Objects can be flat (2D) or solid (3D). Let's look at why!</p>
+        
+        <div class="comparison-grid">
+            <div class="card">
+                <div class="shape-box">
+                    <svg width="60" height="60"><rect width="60" height="40" fill="#f39c12" /></svg>
+                </div>
+                <h3>Plane Surface (2D)</h3>
+                <p>Flat like a sheet of paper.</p>
+                <ul style="text-align: left;">
+                    <li>Length & Breadth</li>
+                    <li>No Height</li>
+                    <li>Cannot hold anything inside</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="shape-box">
+                    <!-- Simple CSS Cube representation -->
+                    <div style="width:40px; height:40px; background: var(--success); border: 2px solid #27ae60; position:relative;">
+                        <div style="position:absolute; top:-10px; left:10px; width:40px; height:10px; background:#a2f0c1; transform: skewX(-45deg);"></div>
+                        <div style="position:absolute; top:-5px; left:40px; width:10px; height:40px; background:#1e8449; transform: skewY(-45deg);"></div>
+                    </div>
+                </div>
+                <h3>Solid Object (3D)</h3>
+                <p>Takes up space like a box.</p>
+                <ul style="text-align: left;">
+                    <li>Length & Breadth</li>
+                    <li><b>+ Height (Thickness)</b></li>
+                    <li>Occupy Space</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tab 2: Sorting Game -->
+    <section id="game" class="content-section">
+        <div class="game-area">
+            <h2>Drag and Sort!</h2>
+            <p>Drag the objects into the correct category.</p>
+            
+            <div id="item-bank" class="draggable-container">
+                <div class="item" draggable="true" data-type="plane">Paper Sheet</div>
+                <div class="item" draggable="true" data-type="solid">Dice</div>
+                <div class="item" draggable="true" data-type="plane">Drawing</div>
+                <div class="item" draggable="true" data-type="solid">Water Bottle</div>
+                <div class="item" draggable="true" data-type="solid">Cricket Ball</div>
+                <div class="item" draggable="true" data-type="plane">Postage Stamp</div>
+            </div>
+
+            <div class="drop-zones">
+                <div id="plane-zone" class="zone" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <h4>Plane Surfaces (Flat)</h4>
+                </div>
+                <div id="solid-zone" class="zone" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <h4>Solid Objects (3D)</h4>
+                </div>
+            </div>
+            
+            <div id="feedback" class="feedback"></div>
+            <button class="btn" onclick="resetGame()">Reset Game</button>
+        </div>
+    </section>
+
+    <!-- Tab 3: Quick Quiz -->
+    <section id="quiz" class="content-section">
+        <h2>Quick Check</h2>
+        <div id="quiz-container">
+            <p>1. Which of these can roll?</p>
+            <button class="btn" onclick="checkQuiz(this, false)">A Square Drawing</button>
+            <button class="btn" onclick="checkQuiz(this, true)">A Football</button>
+            
+            <p>2. What do Solid Objects have that Plane Surfaces don't?</p>
+            <button class="btn" onclick="checkQuiz(this, true)">Height/Thickness</button>
+            <button class="btn" onclick="checkQuiz(this, false)">Color</button>
+        </div>
+    </section>
+</div>
+
+<script>
+    // Tab Switching Logic
+    function showTab(tabId) {
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // Drag and Drop Logic
+    let draggedItem = null;
+
+    document.querySelectorAll('.item').forEach(item => {
+        item.addEventListener('dragstart', function(e) {
+            draggedItem = item;
+            setTimeout(() => item.style.opacity = '0.5', 0);
+        });
+
+        item.addEventListener('dragend', function() {
+            setTimeout(() => draggedItem.style.opacity = '1', 0);
+            draggedItem = null;
+        });
+    });
+
+    function allowDrop(e) {
+        e.preventDefault();
+    }
+
+    function drop(e) {
+        e.preventDefault();
+        const zone = e.target.closest('.zone');
+        if (!zone || !draggedItem) return;
+
+        const itemType = draggedItem.getAttribute('data-type');
+        const zoneId = zone.id;
+
+        if ((itemType === 'plane' && zoneId === 'plane-zone') || 
+            (itemType === 'solid' && zoneId === 'solid-zone')) {
+            zone.appendChild(draggedItem);
+            document.getElementById('feedback').innerText = "✅ Correct!";
+            document.getElementById('feedback').style.color = "green";
+        } else {
+            document.getElementById('feedback').innerText = "❌ Try again!";
+            document.getElementById('feedback').style.color = "red";
+        }
+    }
+
+    function resetGame() {
+        const bank = document.getElementById('item-bank');
+        document.querySelectorAll('.item').forEach(item => bank.appendChild(item));
+        document.getElementById('feedback').innerText = "";
+    }
+
+    function checkQuiz(btn, isCorrect) {
+        if(isCorrect) {
+            btn.style.background = "#2ecc71";
+            alert("Well done! That's correct.");
+        } else {
+            btn.style.background = "#e74c3c";
+            alert("Oops! Think about if it has height or is flat.");
+        }
+    }
+</script>
+
+</body>
+</html>
