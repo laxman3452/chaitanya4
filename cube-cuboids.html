@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Day 2: Cubes and Cuboids</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --secondary: #f39c12;
+            --success: #2ecc71;
+            --bg: #f4f7f6;
+            --text: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Nav Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-next { background: var(--primary); color: white; }
+        .btn-prev { background: #95a5a6; color: white; }
+        button:hover { opacity: 0.8; }
+
+        /* Content Styling */
+        .card-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .shape-card {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+        }
+
+        .cube-color { border-top: 10px solid var(--secondary); }
+        .cuboid-color { border-top: 10px solid var(--primary); }
+
+        /* Sorting Activity */
+        #sort-zone {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .drop-box {
+            width: 40%;
+            min-height: 200px;
+            border: 3px dashed #bbb;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .draggable {
+            background: white;
+            border: 1px solid #333;
+            padding: 10px;
+            margin: 5px;
+            cursor: move;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th { background: #f8f8f8; }
+
+        input[type="text"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .score-msg { font-weight: bold; color: var(--success); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Mathematics: Cubes & Cuboids</h1>
+        <p>Class 4 | Lesson Day 2</p>
+    </header>
+
+    <!-- 1. Revision -->
+    <div id="step1" class="section active">
+        <h2>1. Revision (10 Mins)</h2>
+        <p>Let's look back at what we know:</p>
+        <ul>
+            <li><strong>Plane Surfaces:</strong> Flat surfaces like a sheet of paper.</li>
+            <li><strong>Solid Objects:</strong> Objects that take up space (3D).</li>
+        </ul>
+        <div style="background: #fff8e1; padding: 15px; border-left: 5px solid #ffe082;">
+            <strong>Teacher's Note:</strong> Check students' homework drawings of plane shapes.
+        </div>
+    </div>
+
+    <!-- 2. Introduction -->
+    <div id="step2" class="section">
+        <h2>2. Introduction (15 Mins)</h2>
+        <div class="card-container">
+            <div class="shape-card cube-color">
+                <h3>Cube</h3>
+                <p>● Has 6 equal square faces.</p>
+                <p><strong>Examples:</strong> Dice, Rubik's Cube</p>
+            </div>
+            <div class="shape-card cuboid-color">
+                <h3>Cuboid</h3>
+                <p>● Has rectangular faces.</p>
+                <p>● Opposite faces are equal.</p>
+                <p><strong>Examples:</strong> Book, Pencil Box, Brick</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Observe & Compare -->
+    <div id="step3" class="section">
+        <h2>3. Activity: Observe & Compare (15 Mins)</h2>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Cube</th>
+                <th>Cuboid</th>
+            </tr>
+            <tr>
+                <td><strong>Faces</strong></td>
+                <td>Equal square faces</td>
+                <td>Rectangular faces</td>
+            </tr>
+            <tr>
+                <td><strong>Measurements</strong></td>
+                <td>Same length, breadth, height</td>
+                <td>Different measurements</td>
+            </tr>
+        </table>
+        <p><em>Hold your dice and your book. Can you feel the difference?</em></p>
+    </div>
+
+    <!-- 4. Sorting Activity -->
+    <div id="step4" class="section">
+        <h2>4. Activity: Sorting (15 Mins)</h2>
+        <p>Drag the items into the correct group!</p>
+        <div id="items-to-sort">
+            <div class="draggable" draggable="true" id="item1" data-type="cube">Dice</div>
+            <div class="draggable" draggable="true" id="item2" data-type="cuboid">Book</div>
+            <div class="draggable" draggable="true" id="item3" data-type="cube">Ice Cube</div>
+            <div class="draggable" draggable="true" id="item4" data-type="cuboid">Eraser Box</div>
+            <div class="draggable" draggable="true" id="item5" data-type="cuboid">Soap Box</div>
+            <div class="draggable" draggable="true" id="item6" data-type="cube">Sugar Cube</div>
+        </div>
+        <div id="sort-zone">
+            <div class="drop-box" id="cube-group" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h3>CUBE GROUP</h3>
+            </div>
+            <div class="drop-box" id="cuboid-group" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h3>CUBOID GROUP</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Drawing -->
+    <div id="step5" class="section">
+        <h2>5. Activity: Drawing (10 Mins)</h2>
+        <p>Open your notebook. Try drawing these following the teacher's steps:</p>
+        <div class="card-container">
+            <div style="text-align: center;">
+                <p><strong>Draw a Cube</strong></p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/6-faced_die.svg/150px-6-faced_die.svg.png" width="100" alt="cube">
+            </div>
+            <div style="text-align: center;">
+                <p><strong>Draw a Cuboid</strong></p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Cuboid_simple.svg/200px-Cuboid_simple.svg.png" width="120" alt="cuboid">
+            </div>
+        </div>
+        <p><em>Don't forget to color your shapes!</em></p>
+    </div>
+
+    <!-- 6. Assessment -->
+    <div id="step6" class="section">
+        <h2>6. Assessment (10 Mins)</h2>
+        <div id="quiz">
+            <p>1. A dice is a <input type="text" id="q1">.</p>
+            <p>2. A book is a <input type="text" id="q2">.</p>
+            <p>3. A cube has <input type="text" id="q3" size="2"> square faces.</p>
+            <button onclick="checkQuiz()" class="btn-next">Check Answers</button>
+            <p id="quiz-result" class="score-msg"></p>
+        </div>
+        <hr>
+        <h3>Oral Questions:</h3>
+        <ul>
+            <li>Which shape looks like a box?</li>
+            <li>Which shape has equal faces?</li>
+        </ul>
+    </div>
+
+    <!-- 7. Conclusion -->
+    <div id="step7" class="section">
+        <h2>7. Conclusion & Homework</h2>
+        <div style="background: #e8f4fd; padding: 20px; border-radius: 10px;">
+            <h3>Summary</h3>
+            <ul>
+                <li><strong>Cube:</strong> 6 Equal Square faces.</li>
+                <li><strong>Cuboid:</strong> Rectangular faces.</li>
+                <li>Both are <strong>Solid Shapes</strong>.</li>
+            </ul>
+        </div>
+        <h3>🏠 Homework</h3>
+        <p>Find or draw <strong>2 cubes</strong> and <strong>2 cuboids</strong> you see at home. Write their names in your notebook!</p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-buttons">
+        <button id="prevBtn" class="btn-prev" onclick="changeStep(-1)">Previous</button>
+        <button id="nextBtn" class="btn-next" onclick="changeStep(1)">Next</button>
+    </div>
+</div>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 7;
+
+    function changeStep(n) {
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+        currentStep += n;
+        
+        if (currentStep < 1) currentStep = 1;
+        if (currentStep > totalSteps) currentStep = totalSteps;
+
+        document.getElementById(`step${currentStep}`).classList.add('active');
+
+        // Toggle buttons
+        document.getElementById('prevBtn').style.visibility = (currentStep === 1) ? 'hidden' : 'visible';
+        document.getElementById('nextBtn').innerText = (currentStep === totalSteps) ? 'Finish' : 'Next';
+    }
+
+    // Drag and Drop Logic
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    document.querySelectorAll('.draggable').forEach(item => {
+        item.addEventListener('dragstart', ev => {
+            ev.dataTransfer.setData("text", ev.target.id);
+        });
+    });
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var draggedEl = document.getElementById(data);
+        var dropTarget = ev.target.closest('.drop-box');
+        
+        if (dropTarget) {
+            dropTarget.appendChild(draggedEl);
+            // Quick validation visual
+            const type = draggedEl.getAttribute('data-type');
+            if ((type === 'cube' && dropTarget.id === 'cube-group') || 
+                (type === 'cuboid' && dropTarget.id === 'cuboid-group')) {
+                draggedEl.style.borderColor = "green";
+            } else {
+                draggedEl.style.borderColor = "red";
+            }
+        }
+    }
+
+    // Quiz Logic
+    function checkQuiz() {
+        let score = 0;
+        const q1 = document.getElementById('q1').value.toLowerCase().trim();
+        const q2 = document.getElementById('q2').value.toLowerCase().trim();
+        const q3 = document.getElementById('q3').value.trim();
+
+        if (q1 === 'cube') score++;
+        if (q2 === 'cuboid') score++;
+        if (q3 === '6') score++;
+
+        const result = document.getElementById('quiz-result');
+        result.innerText = `You got ${score}/3 correct!`;
+    }
+
+    // Initialize
+    document.getElementById('prevBtn').style.visibility = 'hidden';
+</script>
+
+</body>
+</html>
