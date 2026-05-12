@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 5: Faces, Edges, and Vertices</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #0ea5e9;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        .lesson-meta {
+            display: flex;
+            justify-content: space-between;
+            background: #eef2ff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-next { background: var(--primary); color: white; }
+        .btn-prev { background: #cbd5e1; color: var(--text); }
+        button:hover { opacity: 0.9; transform: scale(1.05); }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .obj-card {
+            background: #f1f5f9;
+            padding: 15px;
+            border-left: 5px solid var(--secondary);
+            border-radius: 4px;
+        }
+
+        .parts-explorer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            padding: 20px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+        }
+
+        .shape-display {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            background: #e0e7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+        }
+
+        .info-panel {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .info-box {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-box:hover { background: #f0f9ff; border-color: var(--secondary); }
+        .info-box.active-part { background: var(--secondary); color: white; }
+
+        .counter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .counter-table th, .counter-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .counter-table th { background: var(--primary); color: white; }
+
+        .interactive-labeling {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hidden { display: none; }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 14%;
+            border-radius: 10px;
+            transition: 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Lesson Plan: Day 5</h1>
+        <div class="lesson-meta">
+            <span>Class: 4 | Mathematics</span>
+            <span>Duration: 80 Minutes</span>
+        </div>
+        <p><strong>Topic: Parts of 3D Shapes (Cubes & Cuboids)</strong></p>
+    </header>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Section 1: Objectives -->
+    <div class="section active" id="sec1">
+        <h2>Learning Objectives</h2>
+        <div class="objectives-grid">
+            <div class="obj-card"><strong>Understand:</strong> Faces, edges, and vertices.</div>
+            <div class="obj-card"><strong>Count:</strong> Parts of cubes and cuboids.</div>
+            <div class="obj-card"><strong>Construct:</strong> Build your own models.</div>
+            <div class="obj-card"><strong>Apply:</strong> Complete the 3D Shape Project.</div>
+        </div>
+        <h3>Materials Needed:</h3>
+        <p>Colored papers, Glue, Scissors, Rulers, Dice, Boxes, Chart paper, Toothpicks/Clay.</p>
+    </div>
+
+    <!-- Section 2: Revision -->
+    <div class="section" id="sec2">
+        <h2>1. Revision (10 Mins)</h2>
+        <p>Look around the room. Can you find examples of these shapes?</p>
+        <div style="display: flex; gap: 20px; justify-content: center;">
+            <div style="text-align:center;">
+                <div style="width:80px; height:80px; background:var(--primary); margin:auto; border:2px solid #000;"></div>
+                <p><strong>Cube</strong><br>(All sides equal)</p>
+            </div>
+            <div style="text-align:center;">
+                <div style="width:120px; height:80px; background:var(--secondary); margin:auto; border:2px solid #000;"></div>
+                <p><strong>Cuboid</strong><br>(Rectangular sides)</p>
+            </div>
+        </div>
+        <p style="text-align: center; color: #64748b;"><em>Think about your homework examples!</em></p>
+    </div>
+
+    <!-- Section 3: Definitions -->
+    <div class="section" id="sec3">
+        <h2>2. Introduction to Parts (15 Mins)</h2>
+        <p>Click on the terms to see what they mean:</p>
+        <div class="parts-explorer">
+            <div class="shape-display" id="partVisualizer">
+                3D SHAPE
+            </div>
+            <div class="info-panel">
+                <div class="info-box" onclick="showPart('Face', 'The flat surface of a solid object. (Like the side of a die)')">
+                    <strong>Face</strong>
+                </div>
+                <div class="info-box" onclick="showPart('Edge', 'The line where two faces meet. (The straight lines)')">
+                    <strong>Edge</strong>
+                </div>
+                <div class="info-box" onclick="showPart('Vertex', 'The corner point where edges meet. (The pointy parts!)')">
+                    <strong>Vertex</strong>
+                </div>
+                <div id="partDescription" style="margin-top:15px; color:var(--primary); font-weight:bold;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 4: Counting -->
+    <div class="section" id="sec4">
+        <h2>3. Counting Challenge (15 Mins)</h2>
+        <p>Work with your partner. Grab a die or a juice box and count!</p>
+        <table class="counter-table">
+            <tr>
+                <th>Shape</th>
+                <th>Faces</th>
+                <th>Edges</th>
+                <th>Vertices</th>
+            </tr>
+            <tr>
+                <td>Cube (Dice)</td>
+                <td><input type="number" placeholder="?" style="width:40px"></td>
+                <td><input type="number" placeholder="?" style="width:40px"></td>
+                <td><input type="number" placeholder="?" style="width:40px"></td>
+            </tr>
+            <tr>
+                <td>Cuboid (Juice Box)</td>
+                <td><input type="number" placeholder="?" style="width:40px"></td>
+                <td><input type="number" placeholder="?" style="width:40px"></td>
+                <td><input type="number" placeholder="?" style="width:40px"></td>
+            </tr>
+        </table>
+        <button onclick="checkCounting()" style="margin-top:10px; background:var(--accent);">Check Answers</button>
+        <p id="countFeedback" style="display:none; color: green; font-weight:bold; margin-top:10px;">Correct! Both have 6 Faces, 12 Edges, and 8 Vertices.</p>
+    </div>
+
+    <!-- Section 5: Activity & Project -->
+    <div class="section" id="sec5">
+        <h2>4. Model Making & 5. Project (30 Mins)</h2>
+        <div style="background: #fff7ed; padding: 15px; border-radius: 8px;">
+            <h3>Step 1: Construction</h3>
+            <p>Use your paper and glue to fold <strong>One Cube</strong> and <strong>One Cuboid</strong>. Label the parts on your model!</p>
+            <h3>Step 2: 3D Shape Chart</h3>
+            <table class="counter-table">
+                <tr><th>Object</th><th>Shape</th><th>F</th><th>E</th><th>V</th></tr>
+                <tr><td>Dice</td><td>Cube</td><td>6</td><td>12</td><td>8</td></tr>
+                <tr><td>Book</td><td>Cuboid</td><td>6</td><td>12</td><td>8</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section 6: Assessment -->
+    <div class="section" id="sec6">
+        <h2>6. Final Assessment (5 Mins)</h2>
+        <p>Quick Quiz: Match the arrows to the correct names.</p>
+        <div style="text-align: center;">
+            <svg width="200" height="200" viewBox="0 0 200 200">
+                <rect x="50" y="70" width="100" height="80" fill="none" stroke="black" stroke-width="2" />
+                <path d="M50 70 L80 40 L180 40 L180 120 L150 150 M150 70 L180 40" fill="none" stroke="black" stroke-width="2" />
+                <!-- Labels -->
+                <circle cx="50" cy="70" r="5" fill="red" /> <!-- Vertex -->
+                <line x1="100" y1="70" x2="100" y2="40" stroke="blue" stroke-width="4" /> <!-- Edge -->
+                <rect x="70" y="90" width="60" height="40" fill="rgba(245, 158, 11, 0.3)" /> <!-- Face -->
+            </svg>
+            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
+                <button onclick="alert('The Red Dot is the Vertex!')">Red Dot?</button>
+                <button onclick="alert('The Blue Line is the Edge!')">Blue Line?</button>
+                <button onclick="alert('The Orange Area is the Face!')">Orange Area?</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 7: Conclusion -->
+    <div class="section" id="sec7">
+        <h2>7. Conclusion (5 Mins)</h2>
+        <div style="background: var(--primary); color: white; padding: 20px; border-radius: 10px; text-align: center;">
+            <h3>Great Job!</h3>
+            <p>Today we learned that Cubes and Cuboids are "Twin Shapes" in counting:</p>
+            <p style="font-size: 1.5rem;">6 Faces | 12 Edges | 8 Vertices</p>
+            <p><em>Share one thing you found interesting today!</em></p>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <button class="btn-prev" id="prevBtn" onclick="changeSection(-1)">Previous</button>
+        <button class="btn-next" id="nextBtn" onclick="changeSection(1)">Next Step</button>
+    </div>
+</div>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 7;
+
+    function changeSection(direction) {
+        document.getElementById(`sec${currentStep}`).classList.remove('active');
+        currentStep += direction;
+        
+        if (currentStep < 1) currentStep = 1;
+        if (currentStep > totalSteps) currentStep = totalSteps;
+        
+        document.getElementById(`sec${currentStep}`).classList.add('active');
+        
+        // Update Buttons
+        document.getElementById('prevBtn').style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+        document.getElementById('nextBtn').innerText = currentStep === totalSteps ? 'Finish' : 'Next Step';
+        
+        // Update Progress
+        document.getElementById('progressBar').style.width = (currentStep / totalSteps * 100) + '%';
+    }
+
+    function showPart(name, desc) {
+        const visualizer = document.getElementById('partVisualizer');
+        const descBox = document.getElementById('partDescription');
+        
+        visualizer.innerText = name.toUpperCase();
+        descBox.innerText = desc;
+        
+        if(name === 'Face') visualizer.style.background = '#fde68a';
+        if(name === 'Edge') visualizer.style.background = '#93c5fd';
+        if(name === 'Vertex') visualizer.style.background = '#fca5a5';
+    }
+
+    function checkCounting() {
+        document.getElementById('countFeedback').style.display = 'block';
+    }
+
+    // Initialize
+    document.getElementById('prevBtn').style.visibility = 'hidden';
+</script>
+
+</body>
+</html>
