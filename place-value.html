@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 7: 7-Digit Place Value & Number Sense</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #2ecc71;
+            --warning: #f1c40f;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: var(--dark);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--secondary);
+            margin-top: 30px;
+            border-left: 5px solid var(--primary);
+            padding-left: 10px;
+        }
+
+        .historical-box {
+            background-color: #e8f4f8;
+            border-left: 5px solid var(--secondary);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        th, td {
+            border: 2px solid var(--primary);
+            padding: 12px;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--light);
+        }
+
+        .interactive-section {
+            background: #fff;
+            border: 2px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        input[type="number"], input[type="text"], select {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .flex-bowls {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .bowl {
+            flex: 1;
+            min-width: 110px;
+            background: #f1c40f;
+            border: 3px solid #f39c12;
+            border-radius: 0 0 50px 50px;
+            padding: 20px 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .bowl-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        .digit-display {
+            font-size: 32px;
+            font-weight: bold;
+            background: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            margin: 0 auto;
+            color: var(--primary);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eafaf1;
+            border: 2px dashed var(--success);
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Day 7: Number Sense & Seven-Digit Place Value</h1>
+
+    <!-- Part I -->
+    <h2>Part I: Historical Context</h2>
+    <div class="historical-box">
+        <p><strong>Before Modern Numbers:</strong> Early humans used 1-to-1 correspondence to count items like livestock or family members. They used:</p>
+        <ul>
+            <li>Tally marks or notches cut into wood/bones.</li>
+            <li>Physical objects like pebbles or shells.</li>
+            <li>Knots tied into ropes.</li>
+        </ul>
+        <p><strong>The Breakthrough:</strong> The Hindu-Arabic (Decimal) system replaced physical objects with just 10 simple digits (0-9) organized by positional values!</p>
+    </div>
+
+    <!-- Part II -->
+    <h2>Part II: The 7-Digit Hindu-Arabic Place Value Table</h2>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Ten Lakhs (TL)</th>
+                    <th>Lakhs (L)</th>
+                    <th>Ten Thousands (TTh)</th>
+                    <th>Thousands (Th)</th>
+                    <th>Hundreds (H)</th>
+                    <th>Tens (T)</th>
+                    <th>Ones (O)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10,00,000</td>
+                    <td>1,00,000</td>
+                    <td>10,000</td>
+                    <td>1,000</td>
+                    <td>100</td>
+                    <td>10</td>
+                    <td>1</td>
+                </tr>
+                <tr style="font-weight: bold; color: var(--secondary);">
+                    <td>5</td>
+                    <td>6</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>3</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Part III -->
+    <h2>Part III: Face Value vs. Place Value Explorer</h2>
+    <div class="interactive-section">
+        <p>Input a number (up to 7 digits) to break down any chosen digit:</p>
+        <input type="number" id="analyzerNum" value="5633431" max="9999999" min="0">
+        <select id="digitSelector">
+            <!-- Dynamically populated by JS -->
+        </select>
+        <button onclick="analyzeDigit()">Analyze Digit</button>
+        
+        <div id="analysisResult" class="result-box" style="display:none;"></div>
+    </div>
+
+    <!-- Part IV -->
+    <h2>Part IV: Expanded & Standard Form Converter</h2>
+    <div class="interactive-section">
+        <p>Enter a 7-digit number to automatically view its mathematically expanded form breakdown:</p>
+        <input type="number" id="expandNum" value="5734298" max="9999999">
+        <button onclick="convertForm()">Expand Number</button>
+        
+        <div id="expandResult" class="result-box" style="display:none; text-align: left; font-family: monospace;"></div>
+    </div>
+
+    <!-- Part V -->
+    <h2>Part V: Digital "Bowl Selection" Activity</h2>
+    <div class="interactive-section">
+        <p>Click the button below to randomly drop digit cards into the 7 labeled structural place-value bowls!</p>
+        <button onclick="playBowlGame()" style="background-color: #f39c12;">Drop Random Cards</button>
+
+        <div class="flex-bowls">
+            <div class="bowl"><div class="bowl-title">Ten Lakhs</div><div class="digit-display" id="b6">-</div></div>
+            <div class="bowl"><div class="bowl-title">Lakhs</div><div class="digit-display" id="b5">-</div></div>
+            <div class="bowl"><div class="bowl-title">Ten Thousands</div><div class="digit-display" id="b4">-</div></div>
+            <div class="bowl"><div class="bowl-title">Thousands</div><div class="digit-display" id="b3">-</div></div>
+            <div class="bowl"><div class="bowl-title">Hundreds</div><div class="digit-display" id="b2">-</div></div>
+            <div class="bowl"><div class="bowl-title">Tens</div><div class="digit-display" id="b1">-</div></div>
+            <div class="bowl"><div class="bowl-title">Ones</div><div class="digit-display" id="b0">-</div></div>
+        </div>
+
+        <div id="gameResult" class="result-box" style="display:none; margin-top:30px;"></div>
+    </div>
+
+    <!-- Live Assessment Answers -->
+    <h2>Teacher Tools: Quick Assessment Correction Key</h2>
+    <div class="historical-box" style="background-color: #fcf3cf; border-left-color: #f39c12;">
+        <ol>
+            <li><strong>Q1 Answer:</strong> In 18,79,312, the digit 8 is in the Lakhs place. Its place value is <strong>8,00,000</strong>.</li>
+            <li><strong>Q2 Answer:</strong> In 93,45,281, the digit 5 holds the <strong>Thousands place</strong>, and its value is <strong>5,000</strong>.</li>
+            <li><strong>Q3 Answer:</strong> 8,00,201 = <span style="font-family: monospace;">(8 × 1,00,000) + (0 × 10,000) + (0 × 1,000) + (2 × 100) + (0 × 10) + (1 × 1)</span></li>
+            <li><strong>Q4 Answer:</strong> Standard compiled form value is <strong>5,32,694</strong>.</li>
+        </ol>
+    </div>
+</div>
+
+<script>
+    const places = ["Ones", "Tens", "Hundreds", "Thousands", "Ten Thousands", "Lakhs", "Ten Lakhs"];
+    const multipliers = [1, 10, 100, 1000, 10000, 100000, 1000000];
+
+    // Initialize Dropdown
+    function updateDropdown() {
+        const numStr = document.getElementById('analyzerNum').value;
+        const selector = document.getElementById('digitSelector');
+        selector.innerHTML = '';
+        
+        for(let i = 0; i < numStr.length; i++) {
+            let option = document.createElement('option');
+            option.value = i;
+            option.text = `Digit at Position ${i+1} (${numStr[i]})`;
+            selector.appendChild(option);
+        }
+    }
+    document.getElementById('analyzerNum').addEventListener('input', updateDropdown);
+    updateDropdown();
+
+    // Part III Logic
+    function analyzeDigit() {
+        const numStr = document.getElementById('analyzerNum').value;
+        const index = parseInt(document.getElementById('digitSelector').value);
+        
+        if(!numStr || isNaN(index)) return;
+
+        const reverseIdx = numStr.length - 1 - index;
+        const faceValue = numStr[index];
+        const placeName = places[reverseIdx] || "Outside Scope";
+        const multiplier = multipliers[reverseIdx] || 0;
+        const placeValue = parseInt(faceValue) * multiplier;
+
+        const resultDiv = document.getElementById('analysisResult');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+            Digit Selected: <span style="color:var(--secondary);">${faceValue}</span><br>
+            • Face Value: ${faceValue} (The look of it)<br>
+            • Place: ${placeName}<br>
+            • Place Value calculation: ${faceValue} × ${multiplier.toLocaleString('en-IN')} = ${placeValue.toLocaleString('en-IN')}
+        `;
+    }
+
+    // Part IV Logic
+    function convertForm() {
+        const val = parseInt(document.getElementById('expandNum').value);
+        if(isNaN(val) || val > 9999999 || val < 0) {
+            alert("Please enter a valid positive number up to 7 digits.");
+            return;
+        }
+
+        const numStr = val.toString();
+        let expansionArr = [];
+        let cleanTextArr = [];
+
+        for(let i = 0; i < numStr.length; i++) {
+            let revIdx = numStr.length - 1 - i;
+            let digit = numStr[i];
+            let mult = multipliers[revIdx];
+            
+            expansionArr.push(`(${digit} × ${mult.toLocaleString('en-IN')})`);
+            cleanTextArr.push((parseInt(digit) * mult).toLocaleString('en-IN'));
+        }
+
+        const resultDiv = document.getElementById('expandResult');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+            <strong>Standard Hindu-Arabic Notation:</strong> ${val.toLocaleString('en-IN')}<br><br>
+            <strong>Expanded Multiplication Form:</strong><br>${expansionArr.join(" + ")}<br><br>
+            <strong>Sum Value Breakdown:</strong><br>${cleanTextArr.join(" + ")}
+        `;
+    }
+
+    // Part V Logic
+    function playBowlGame() {
+        let generatedDigits = [];
+        // Generate random digits into bowls
+        for(let i = 6; i >= 0; i--) {
+            let randDigit = Math.floor(Math.random() * 10);
+            generatedDigits.push(randDigit);
+            document.getElementById(`b${i}`).innerText = randDigit;
+        }
+
+        // Handle case if first digit is 0 to calculate formal value representation
+        const standardNumValue = parseInt(generatedDigits.join(''));
+        
+        const gameResult = document.getElementById('gameResult');
+        gameResult.style.display = 'block';
+        gameResult.innerHTML = `
+            Class challenge assembled!<br>
+            Standard Form Number: <span style="color:var(--secondary); font-size:24px;">${standardNumValue.toLocaleString('en-IN')}</span><br>
+            <span style="font-size:14px; font-weight:normal; color:#555;">Ask your students to write out the expression in words or extract isolated values!</span>
+        `;
+    }
+</script>
+
+</body>
+</html>
