@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Work: Exploring Plane Surfaces</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #13c2c2;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --success: #2ecc71;
+            --warning: #f1c40f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #eef2f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 5px; }
+        h2 { color: var(--primary); border-left: 4px solid var(--secondary); padding-left: 10px; }
+        
+        .meta-info {
+            display: flex;
+            justify-content: space-around;
+            background: var(--light);
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .step-card {
+            background: var(--light);
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+
+        .step-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .badge {
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Interactive Checklist */
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .checklist-item input {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+
+        .checked {
+            text-decoration: line-through;
+            color: #7f8c8d;
+        }
+
+        /* Interactive Canvas for Tracing Practice */
+        #canvas-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        canvas {
+            border: 2px dashed var(--primary);
+            background: #fff;
+            cursor: crosshair;
+            border-radius: 4px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .btn:hover { background: #3a5d8c; }
+        .btn-clear { background: #e74c3c; }
+        .btn-clear:hover { background: #c0392b; }
+
+        /* Mapping Grid */
+        .mapping-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .map-card {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .map-card.active {
+            border-color: var(--success);
+            background: #e8f8f5;
+        }
+
+        /* Congratulation Modal/Alert */
+        #success-msg {
+            display: none;
+            background: var(--success);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>📐 Project Work: Exploring Plane Surfaces</h1>
+        <p>Let's discover how school geometry brings the real world to life!</p>
+        <div class="meta-info">
+            <span>⏱️ Total Time: 30 Minutes</span>
+            <span>🎯 3 Objectives</span>
+        </div>
+    </header>
+
+    <section>
+        <h2>Project Objectives</h2>
+        <ul>
+            <li><strong>Identify:</strong> Find everyday household objects with flat (plane) surfaces.</li>
+            <li><strong>Understand:</strong> Discover geometric boundaries by physically tracing object edges.</li>
+            <li><strong>Connect:</strong> Match classroom geometry with your surrounding environment.</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <div class="step-card">
+        <h3><span class="badge">Step 1</span> Introduction & Object Collection (5 Mins)</h3>
+        <blockquote>
+            <strong>What is a Plane Surface?</strong><br>
+            A plane surface is a completely flat surface that can extend forever in all directions, or it is simply the flat face of a solid object.
+        </blockquote>
+        
+        <p><strong>Your Task:</strong> Find <strong>5 items</strong> within your immediate reach that have completely flat faces. Check them off as you find them:</p>
+        
+        <div id="scavenger-hunt">
+            <label class="checklist-item">
+                <input type="checkbox" onclick="toggleCheck(this)"> 📓 Notebook / Textbook
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onclick="toggleCheck(this)"> ✏️ Geometry Box
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onclick="toggleCheck(this)"> 🪵 Small Flat Block / Eraser
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onclick="toggleCheck(this)"> 📱 Phone Case
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox" onclick="toggleCheck(this)"> ☕ Coaster or Flat Lid
+            </label>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <h3><span class="badge">Step 2</span> Hands-on Tracing & Observation (15 Mins)</h3>
+        <p><strong>Your Task:</strong> Place your real objects on your physical exercise book and trace around the edges with a pencil. </p>
+        
+        <div style="background: #eaeded; padding: 15px; border-radius: 6px;">
+            <p>👇 <strong>Practice Digital Tracing!</strong> Try tracing a quick shape in the box below to see how edges capture 2D figures:</p>
+            <div id="canvas-container">
+                <canvas id="paintCanvas" width="400" height="200"></canvas>
+                <br>
+                <button class="btn btn-clear" onclick="clearCanvas()">Clear Practice Canvas</button>
+            </div>
+        </div>
+
+        <p>💡 <strong>Critical Thinking Prompt:</strong> Once you trace your shapes on paper, write down the name of the object next to it and identify its 2D geometric match:</p>
+        <ul>
+            <li>Is it a <strong>Rectangle</strong>? 🟦</li>
+            <li>Is it a <strong>Square</strong>? 🔲</li>
+            <li>Is it a <strong>Circle</strong>? 🔴</li>
+        </ul>
+    </div>
+
+    <div class="step-card">
+        <h3><span class="badge">Step 3</span> Surrounding Mapping & Presentation (10 Mins)</h3>
+        <p>Plane surfaces are everywhere! Click on the public places below to see where massive plane surfaces hide in plain sight:</p>
+        
+        <div class="mapping-grid">
+            <div class="map-card" onclick="revealMapping(this, '🏫 School: Blackboards & Desks!')">🏫 Schools</div>
+            <div class="map-card" onclick="revealMapping(this, '🛝 Park: Smooth Bench Seats & Game Boards!')">🛝 Parks</div>
+            <div class="map-card" onclick="revealMapping(this, '🛍️ Market: Flat Signboards & Shop Counters!')">🛍️ Markets</div>
+            <div class="map-card" onclick="revealMapping(this, '🛣️ Roads: Billboards & Car License Plates!')">🛣️ Roads</div>
+        </div>
+        
+        <p id="mapping-display" style="margin-top: 15px; font-weight: bold; color: var(--primary); text-align: center; min-height: 24px;"></p>
+
+        <p>📢 <strong>Presentation Activity:</strong> Turn to your neighbor or present to the class! Show off your traced shapes and share your real-world mapping list.</p>
+    </div>
+
+    <div id="success-msg">🎉 Awesome job! You've mastered Plane Surfaces and connected geometry to the real world!</div>
+</div>
+
+<script>
+    // Checklist functionality
+    function toggleCheck(checkbox) {
+        if(checkbox.checked) {
+            checkbox.parentElement.classList.add('checked');
+        } else {
+            checkbox.parentElement.classList.remove('checked');
+        }
+        checkProgress();
+    }
+
+    // Mapping Reveal functionality
+    function revealMapping(element, text) {
+        // Reset actives
+        document.querySelectorAll('.map-card').forEach(card => card.classList.remove('active'));
+        // Activate current
+        element.classList.add('active');
+        // Show text
+        document.getElementById('mapping-display').innerText = text;
+        checkProgress();
+    }
+
+    // Canvas drawing logic for practice tracing
+    const canvas = document.getElementById('paintCanvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+
+    // Canvas Setup styles
+    ctx.strokeStyle = '#4a6fa5';
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    // Touch support for mobile/tablets
+    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e.touches[0]); });
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
+    canvas.addEventListener('touchend', stopDrawing);
+
+    function startDrawing(e) {
+        drawing = true;
+        draw(e);
+    }
+
+    function draw(e) {
+        if (!drawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX || e.pageX) - rect.left;
+        const y = (e.clientY || e.pageY) - rect.top;
+
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    }
+
+    function stopDrawing() {
+        drawing = false;
+        ctx.beginPath();
+    }
+
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Interactive milestone check
+    function checkProgress() {
+        const totalCheckboxes = document.querySelectorAll('#scavenger-hunt input').length;
+        const checkedBoxes = document.querySelectorAll('#scavenger-hunt input:checked').length;
+        const placeSelected = document.querySelectorAll('.map-card.active').length;
+
+        // If they checked all items and interacted with mapping, show success banner
+        if(checkedBoxes === totalCheckboxes && placeSelected > 0) {
+            document.getElementById('success-msg').style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
